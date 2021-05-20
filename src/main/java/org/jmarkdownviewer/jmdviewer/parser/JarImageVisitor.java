@@ -18,7 +18,6 @@ public class JarImageVisitor extends AbstractVisitor {
 	public void visit(Image image) {
 		if(appclass.getResource(image.getDestination()) == null) return;
 		
-		System.out.println(image.getDestination());
 		String url = appclass.getResource(image.getDestination()).toString();
 		image.setDestination(url);
 		visitChildren(image);

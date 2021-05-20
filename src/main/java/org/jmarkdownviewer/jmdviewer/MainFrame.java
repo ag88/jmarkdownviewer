@@ -251,11 +251,9 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 			e.printStackTrace();
 		}
 		MarkdownParser parser = new MarkdownParser();
-		System.out.print(sb.toString());
 		parser.parse(sb.toString());
 		parser.updatejarimages(App.class);
 		String html = parser.getHTML();
-		System.out.println(html);
 		if(html != null && html != "") {
 			htmlpane.setText(html);
 			htmlpane.setCaretPosition(0);

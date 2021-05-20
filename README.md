@@ -35,7 +35,7 @@ Java >= 1.8
 ## Notes / limitations
 
 - Rendering of images and other html features is based on available features in Java
-Swing. This generally support formats such as jpg, png and gif. Unsupported image formats would be rendered with a broken image icon.
+Swing. This generally support image formats such as jpg, png and gif. Unsupported image formats would be rendered with a broken image icon.
 
 ## Attributions
  
