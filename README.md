@@ -1,0 +1,67 @@
+# ![Markdown](web/markdown.png "Markdown") &nbsp; Markdown Viewer
+---
+
+This is a Markdown viewer for java. Primarily it tries to display github styled markdown scripts.
+
+
+![example](web/screen.png "example")
+
+## Run
+
+Download the release jar file and run
+```
+java -jar jmdviewer-x.y.jar
+```
+where x.y is the version number. You can pass the markdown filename on the command line
+```
+java -jar jmdviewer-x.y.jar [filename.md]
+```
+## Build
+
+In linux/osx/un*x:
+```
+mvnw clean package
+```
+in windows:
+```
+mvnw.cmd clean package
+```
+The built jar file is in the target folder.
+
+## Pre-requisites
+
+Java >= 1.8
+
+## Notes / limitations
+
+- Rendering of images and other html features is based on available features in Java
+Swing. This generally support formats such as jpg, png and gif. Unsupported image formats would be rendered with a broken image icon.
+
+## Attributions
+ 
+- Markdown parser: Commonmark java  
+[https://github.com/commonmark/commonmark-java](https://github.com/commonmark/commonmark-java)
+
+
+## License
+
+This application is licensed under MIT license:
+Copyright (c) 2021 Andrew Goh
+
+Various sub-license for Commonmark-java and resources used is 
+appended in LICENSE.txt
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Origin
+
+github repository: 
+[https://github.com/ag88/jmdviewer](https://github.com/ag88/jmdviewer)
+
+Developing this has taken quite some effort mainly in getting it to work and rather extensive tests. if you use this app and found it useful, i'd really appreciate it if you could support my efforts [![Donate](web/donorbox.png)](https://donorbox.org/jmdviewer) ;)
