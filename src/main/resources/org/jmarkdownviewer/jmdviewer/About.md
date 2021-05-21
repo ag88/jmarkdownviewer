@@ -12,7 +12,9 @@ Swing. This generally support image formats such as jpg, png and gif. Unsupporte
  
 - Markdown parser: Commonmark java  
 [https://github.com/commonmark/commonmark-java](https://github.com/commonmark/commonmark-java)
-
+- Apache Commons CLI
+<https://commons.apache.org/proper/commons-cli/index.html>
+- Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is a mature implementation.
 
 ## Origin
 
@@ -84,4 +86,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+### apache commons-cli
+by Apache Software Foundation:
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+<https://www.apache.org/licenses/LICENSE-2.0>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 

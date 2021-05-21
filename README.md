@@ -6,6 +6,10 @@ This is a Markdown viewer for java. Primarily it tries to display github styled 
 
 ![example](web/screen.png "example")
 
+## Features
+
+- HTML and text export
+
 ## Run
 
 Download the release jar file and run
@@ -41,7 +45,9 @@ Swing. This generally support image formats such as jpg, png and gif. Unsupporte
  
 - Markdown parser: Commonmark java  
 [https://github.com/commonmark/commonmark-java](https://github.com/commonmark/commonmark-java)
-
+- Apache Commons CLI
+<https://commons.apache.org/proper/commons-cli/index.html>
+- Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is one of the most mature around.
 
 ## License
 
