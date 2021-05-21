@@ -9,6 +9,7 @@ This is a Markdown viewer for java. Primarily it tries to display github styled 
 
 - HTML and text export
 - Print (this may allow PDF export using some apps/utilities)
+- Github styled tables
 
 ## Run
 
@@ -47,7 +48,7 @@ Swing. This generally support image formats such as jpg, png and gif. Unsupporte
 [https://github.com/commonmark/commonmark-java](https://github.com/commonmark/commonmark-java)
 - Apache Commons CLI
 <https://commons.apache.org/proper/commons-cli/index.html>
-- Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is one of the most mature around.
+- Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is a mature implementation.
 
 ## License
 
