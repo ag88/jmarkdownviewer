@@ -3,12 +3,12 @@
 
 This is a Markdown viewer for java. Primarily it tries to display github styled markdown scripts.
 
-
 ![example](web/screen.png "example")
 
 ## Features
 
 - HTML and text export
+- Print (this may allow PDF export using some apps/utilities)
 
 ## Run
 

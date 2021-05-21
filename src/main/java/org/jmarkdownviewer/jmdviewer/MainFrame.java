@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -60,6 +61,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 		mFile.add(addmenuitem("Open", "OPEN", KeyEvent.VK_O));
 		mFile.add(addmenuitem("Reload", "RELOAD", KeyEvent.VK_R));
 		mFile.add(addmenuitem("Export", "EXPORT", KeyEvent.VK_E));
+		mFile.add(addmenuitem("Print", "PRINT", KeyEvent.VK_P));
 		mFile.add(addmenuitem("About", "ABOUT", KeyEvent.VK_A));
 		mFile.add(addmenuitem("Exit", "EXIT", KeyEvent.VK_X));
 
@@ -234,6 +236,21 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 		JOptionPane.showMessageDialog(this, pane);
 	}
 
+	private void doprint() {
+		try {
+			boolean done = htmlpane.print();
+            if (done) {
+                JOptionPane.showMessageDialog(this, "Printing is done");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error while printing");
+            }
+		} catch (PrinterException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),
+            		"Error while printing", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }		
+	}
+
 	private void doabout() {		
 		StringBuilder sb = new StringBuilder(1024);
 		try {
@@ -247,7 +264,6 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 			}
 			reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		MarkdownParser parser = new MarkdownParser();
@@ -289,6 +305,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 			doexport();
 		} else if(cmd.equals("MD")) {
 			doviewmd();
+		} else if(cmd.equals("PRINT")) {
+			doprint();
 		} else if (cmd.equals("EXIT")) {
 			dispose();
 			System.exit(0);
