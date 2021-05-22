@@ -71,4 +71,5 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 github repository: 
 [https://github.com/ag88/jmdviewer](https://github.com/ag88/jmdviewer)
 
-Developing this has taken quite some effort mainly in getting it to work and rather extensive tests. if you use this app and found it useful, i'd really appreciate it if you could support my efforts [![Donate](web/donorbox.png)](https://donorbox.org/jmdviewer) ;)
+Developing this has taken quite some effort mainly in getting it to work and rather extensive tests. if you use this app and found it useful, i'd really appreciate it if you could support my efforts [![Donate](web/donorbox.png)](https://donorbox.org/jmdviewer).
+you could also help simply starring this repository ;)
