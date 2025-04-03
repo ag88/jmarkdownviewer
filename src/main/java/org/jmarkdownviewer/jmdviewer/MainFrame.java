@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +39,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLDocument;
 
 import org.jmarkdownviewer.jmdviewer.parser.MarkdownParser;
+import org.jmarkdownviewer.jmdviewer.service.DocService;
+import org.jmarkdownviewer.jmdviewer.service.MarkDownService;
 
 
 public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
@@ -46,7 +50,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
 	public MainFrame() {
 		super();
-		setTitle("jmarkdown viewer");
+		setTitle("jmarkdown (and AsciiDoc) viewer");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		createGui();
 	}
@@ -132,6 +136,10 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
 	private void doopen() {
 		JFileChooser chooser = new JFileChooser(App.getInstance().getLastdir());
+		FileFilter filter = new FileNameExtensionFilter("MarkDown file", "md", "markdown", "mdown", "mdwn");		
+		chooser.addChoosableFileFilter(filter);
+		filter = new FileNameExtensionFilter("AsciiDoc file", "adoc", "asciidoc");
+		chooser.addChoosableFileFilter(filter);
 		int ret = chooser.showOpenDialog(this);
 		if (ret == JFileChooser.APPROVE_OPTION) {			
 			htmlpane.load(chooser.getSelectedFile());
@@ -143,8 +151,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 		htmlpane.load(file);
 	}
 	
-	String selextension;
-	
+	String selextension;	
+		
 	private void doexport() {		 
 		JFileChooser chooser = new JFileChooser(App.getInstance().getLastdir());
 		FileFilter filter = new FileNameExtensionFilter("HTML file", "htm", "html");
@@ -187,51 +195,37 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 			}
 			if (file.getName().toLowerCase().endsWith("htm") ||
 				file.getName().toLowerCase().endsWith("html")) {
-				doExpHTML(file);
-			} else if (file.getName().toLowerCase().endsWith("txt")) {
-				doExpText(file);				
+				DocService docservice = htmlpane.getDocservice();
+				if (docservice == null)
+					return;				
+				try {
+					docservice.exportHTML(htmlpane.getFile(), file);
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), "IO Error", JOptionPane.ERROR_MESSAGE);
+				}						
+
+			} else if (file.getName().toLowerCase().endsWith("txt")) {				
+				DocService docservice = htmlpane.getDocservice();
+				if (docservice == null)
+					return;
+				try {
+					docservice.exportText(htmlpane.getFile(), file);
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), "IO Error", JOptionPane.ERROR_MESSAGE);
+				}						
 			}
 				
 		}
 		
 	}
 
-	private void doExpHTML(File file) {
-		try {
-			MarkdownParser parser = new MarkdownParser();
-			File mdfile = htmlpane.getFile();
-			if(mdfile == null) return;
-			
-			parser.parse(mdfile);
-			String html = parser.getHTML();
-			if (html != null && html != "") {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-				writer.write("<html>\n<body>\n");				
-				writer.write(html);
-				writer.write("</body>\n</html>\n");
-				writer.flush();
-				writer.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void doExpText(File file) {
-		String text = htmlpane.getasText();
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(text);
-			writer.flush();
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 		
 	private void doviewmd() {
 		JTextArea ta = new JTextArea(40, 80);
-		ta.setText(htmlpane.getMD());		
+		
+		DocService docservice = htmlpane.getDocservice();
+		File file = htmlpane.getFile();
+		ta.setText(docservice.loadRaw(file));
 		JScrollPane pane = new JScrollPane(ta);
 		JOptionPane.showMessageDialog(this, pane);
 	}

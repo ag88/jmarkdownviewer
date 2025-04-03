@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Image;
+import org.commonmark.node.Link;
 
 public class JarImageVisitor extends AbstractVisitor {
 

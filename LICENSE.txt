@@ -69,6 +69,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+Asciidoctorj 
+https://github.com/asciidoctor/asciidoctorj
+Apache License 2.0
+by https://asciidoctor.org/
+https://github.com/asciidoctor/asciidoctorj
+
+
 Apache Commons CLI
 
 by Apache Software Foundation:

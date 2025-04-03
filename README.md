@@ -1,12 +1,13 @@
-# ![Markdown](web/markdown.png "Markdown") &nbsp; Markdown Viewer
+# ![Markdown](web/markdown.png "Markdown") &nbsp; Markdown and ![AsciiDoc](web/AsciiDoc-color.png "AsciiDoc") Viewer
 ---
 
-This is a Markdown viewer for java. Primarily it tries to display github styled markdown scripts.
+This is a Markdown (and AsciiDoc) viewer for java. Primarily it tries to display github styled markdown scripts.
 
 ![example](web/screen.png "example")
 
 ## Features
 
+- **new** v0.8 added AsciiDoc support
 - HTML and text export
 - Print (this may allow PDF export using some apps/utilities)
 - Github styled tables
@@ -46,6 +47,9 @@ Swing. This generally support image formats such as jpg, png and gif. Unsupporte
  
 - Markdown parser: Commonmark java  
 [https://github.com/commonmark/commonmark-java](https://github.com/commonmark/commonmark-java)
+- AsciiDoc parser: AsciidoctorJ
+[https://github.com/asciidoctor/asciidoctorj](https://github.com/asciidoctor/asciidoctorj)
+[https://asciidoctor.org](https://asciidoctor.org)
 - Apache Commons CLI
 <https://commons.apache.org/proper/commons-cli/index.html>
 - Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is a mature implementation.

@@ -24,13 +24,24 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
+import org.asciidoctor.Asciidoctor;
+import org.asciidoctor.Options;
+import org.asciidoctor.OptionsBuilder;
+import org.asciidoctor.SafeMode;
 import org.commonmark.node.Node;
 import org.jmarkdownviewer.jmdviewer.parser.MarkdownParser;
+import org.jmarkdownviewer.jmdviewer.service.ADocService;
+import org.jmarkdownviewer.jmdviewer.service.DocService;
+import org.jmarkdownviewer.jmdviewer.service.MarkDownService;
 
 public class HtmlPane extends JEditorPane {
 
 	Node document;
 	File file;
+	DocService docservice;	
+	
+	final String[] mdexts = {".md", ".markdown", ".mdown", ".mdwn"};
+	final String[] adocexts = {".adoc", ".asciidoc"};
 	
 	public HtmlPane() {
 		setEditable(false);
@@ -47,48 +58,58 @@ public class HtmlPane extends JEditorPane {
 		stylesheet.importStyleSheet(App.class.getResource("github.css"));
 
 		String imgsrc = App.class.getResource("markdown.png").toString();
+		String imgsrcadoc = App.class.getResource("AsciiDoc-color.png").toString();
 		// create some simple html as a string
-		String htmlString = "<html>\n" + "<body>\n" + "<h1>"
-				+ "<img src=\"" + imgsrc + "\">" 
-				+ "&nbsp; Markdown Viewer</h1>\n" 
-				+ "<h2>Select a file</h2>\n"
-				+ "<p>This is some sample text</p>\n"				
-				+ "</body>\n</html>";
+		
+		StringBuilder sb = new StringBuilder(256);
+		sb.append("<html>\n");
+		sb.append("<body>\n");		
+		sb.append("<h1>");
+		sb.append("<img src=\"");
+		sb.append(imgsrc);
+		sb.append("\">");
+		sb.append("&nbsp; Markdown ");
+		sb.append("&amp; ");
+		sb.append("<img src=\"");
+		sb.append(imgsrcadoc);
+		sb.append("\">");
+		sb.append("&nbsp; AsciiDoc ");
+		sb.append("Viewer</h1>\n");
+		sb.append("<h2>Select a file</h2>\n");
+		sb.append("<p>This is some sample text</p>\n");
+		sb.append("</body>\n");
+		sb.append("</html>");
 		
 		// create a document, set it on the jeditorpane, then add the html
 		Document doc = kit.createDefaultDocument();
 		setDocument(doc);
-		setText(htmlString);
+		setText(sb.toString());
 
 	}
 
 	
 	public void load(File file) {
-		MarkdownParser parser = new MarkdownParser();
-		String parent;
-		try {
-			file = file.getCanonicalFile();
-			parent = file.getParentFile().getCanonicalPath();
-		} catch (IOException e1) {
-			parent = App.getInstance().getLastdir();
+				
+		for(String ext : mdexts) {
+			if (file.getName().endsWith(ext)) {
+				this.docservice = new MarkDownService();
+				this.file = file;
+				String html = docservice.load(file, this);				
+				setText(html);				
+				setCaretPosition(0);
+				return;
+			}				
 		}
-		parser.parse(file);
-		document = parser.getDocument();
-		this.file = file;
-		parser.updatefileimages(parent);
-		String html = parser.getHTML();
-		if(html != null) {				
-			try {
-				URL url = new URL("file","",parent);
-				//System.out.println(url.toString());
-				HTMLDocument doc = (HTMLDocument) getDocument();					
-				doc.setBase(url);
-				setDocument(doc);					
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			setText(html);
-			setCaretPosition(0);
+		
+		for(String ext : adocexts) {
+			if (file.getName().endsWith(ext)) {
+				this.docservice = new ADocService();				
+				this.file = file;
+				String html = docservice.load(file, this);
+				setText(html);				
+				setCaretPosition(0);				
+				return;
+			}							
 		}
 	}
 	
@@ -128,30 +149,6 @@ public class HtmlPane extends JEditorPane {
 		return img;
 	}
 
-	public String getasText() {
-		MarkdownParser parser = new MarkdownParser(document);
-		return parser.getText();
-	}
-		
-	public String getMD() {
-		StringBuilder sb = new StringBuilder(1000);
-		if(file == null) 
-			return "";
-	
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String line;
-			while((line = reader.readLine()) != null ) {
-				sb.append(line);
-				sb.append('\n');
-			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-
 	/*
 	public String getMD() {
 		MarkdownParser parser = new MarkdownParser(document);
@@ -177,6 +174,15 @@ public class HtmlPane extends JEditorPane {
 		return sb.toString();
 	}
 
+	public DocService getDocservice() {
+		return docservice;
+	}
+
+	public void setDocservice(DocService docservice) {
+		this.docservice = docservice;
+	}
+	
+	
 	public Node getMDocument() {
 		return document;
 	}

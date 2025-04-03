@@ -3,8 +3,10 @@ package org.jmarkdownviewer.jmdviewer.parser;
 import java.io.BufferedReader;
 
 import org.commonmark.Extension;
+import org.commonmark.ext.autolink.AutolinkExtension;
+import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
-
+import org.commonmark.internal.inline.AutolinkInlineParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,7 +57,10 @@ public class MarkdownParser {
 	}
 	
 	public void parse(String mdtext) {
-		List<Extension> extensions = Arrays.asList(TablesExtension.create());
+		List<Extension> extensions = Arrays.asList(TablesExtension.create(),
+				YamlFrontMatterExtension.create(),
+				AutolinkExtension.create()
+				);
 		Parser parser = Parser.builder()
 				.extensions(extensions)
 				.build();				
@@ -71,6 +76,13 @@ public class MarkdownParser {
 		JarImageVisitor iv = new JarImageVisitor(appclass);
 		document.accept(iv);
 	}
+	
+	public String getYAML() {
+		YAMLVisitor yv = new YAMLVisitor();
+		document.accept(yv);		
+		return yv.getYAML();
+	}
+
 	
 	public String getHTML() {
 		if(document == null)
@@ -90,7 +102,7 @@ public class MarkdownParser {
 		List<Extension> extensions = Arrays.asList(TablesExtension.create());
 		TextContentRenderer renderer = TextContentRenderer.builder()
 		        .extensions(extensions)
-		        .build();
+		        .build();				
 		String text = renderer.render(document);  
 		return text;		
 

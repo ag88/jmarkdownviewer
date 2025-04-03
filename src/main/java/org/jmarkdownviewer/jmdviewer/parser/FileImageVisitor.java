@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Image;
+import org.commonmark.node.Link;
 
 public class FileImageVisitor extends AbstractVisitor {
 
@@ -28,5 +29,20 @@ public class FileImageVisitor extends AbstractVisitor {
 		}
 		visitChildren(image);
 	}
+	
+	@Override
+	public void visit(Link link) {
+		if(!link.getDestination().startsWith("http")) {
+			try {
+				String name = new File(parent,link.getDestination())
+					.toURI().toURL().toExternalForm();
+				link.setDestination(name);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		visitChildren(link);
+	}
+
 
 }
