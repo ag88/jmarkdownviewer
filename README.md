@@ -51,6 +51,9 @@ Swing. This generally support image formats such as jpg, png and gif. Unsupporte
 - AsciiDoc parser: AsciidoctorJ
 [https://github.com/asciidoctor/asciidoctorj](https://github.com/asciidoctor/asciidoctorj)
 [https://asciidoctor.org](https://asciidoctor.org)
+- Jsoup
+[https://jsoup.org/](https://jsoup.org/)
+[https://github.com/jhy/jsoup](https://github.com/jhy/jsoup)
 - Apache Commons CLI
 <https://commons.apache.org/proper/commons-cli/index.html>
 - Last but not least Java and Java Swing itself. The html renderer isn't quite the most feature packed but is a mature implementation.
